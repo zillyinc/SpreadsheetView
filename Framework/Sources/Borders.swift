@@ -21,7 +21,7 @@ public struct Borders {
 
 public enum BorderStyle {
     case none
-    case solid(width: CGFloat, color: UIColor)
+    case solid(width: CGFloat, color: UIColor, dashPattern: [CGFloat])
 }
 
 extension BorderStyle: Equatable {
@@ -56,32 +56,37 @@ final class Border: UIView {
             return
         }
         context.setFillColor(UIColor.clear.cgColor)
-        if case let .solid(width, color) = borders.left {
+
+        if case let .solid(width, color, dashPattern) = borders.left {
             context.move(to: CGPoint(x: width * 0.5, y: 0))
             context.addLine(to: CGPoint(x: width * 0.5, y: bounds.height))
             context.setLineWidth(width)
             context.setStrokeColor(color.cgColor)
+            context.setLineDash(phase: 0, lengths: dashPattern)
             context.strokePath()
         }
-        if case let .solid(width, color) = borders.right {
+        if case let .solid(width, color, dashPattern) = borders.right {
             context.move(to: CGPoint(x: bounds.width - width * 0.5, y: 0))
             context.addLine(to: CGPoint(x: bounds.width - width * 0.5, y: bounds.height))
             context.setLineWidth(width)
             context.setStrokeColor(color.cgColor)
+            context.setLineDash(phase: 0, lengths: dashPattern)
             context.strokePath()
         }
-        if case let .solid(width, color) = borders.top {
+        if case let .solid(width, color, dashPattern) = borders.top {
             context.move(to: CGPoint(x: 0, y: width * 0.5))
             context.addLine(to: CGPoint(x: bounds.width, y: width * 0.5))
             context.setLineWidth(width)
             context.setStrokeColor(color.cgColor)
+            context.setLineDash(phase: 0, lengths: dashPattern)
             context.strokePath()
         }
-        if case let .solid(width, color) = borders.bottom {
+        if case let .solid(width, color, dashPattern) = borders.bottom {
             context.move(to: CGPoint(x: 0, y: bounds.height - width * 0.5))
             context.addLine(to: CGPoint(x: bounds.width, y: bounds.height - width * 0.5))
             context.setLineWidth(width)
             context.setStrokeColor(color.cgColor)
+            context.setLineDash(phase: 0, lengths: dashPattern)
             context.strokePath()
         }
     }
@@ -89,18 +94,18 @@ final class Border: UIView {
     override func layoutSubviews() {
         super.layoutSubviews()
 
-        if case let .solid(width, _) = borders.left {
+        if case let .solid(width, _, _) = borders.left {
             frame.origin.x -= width * 0.5
             frame.size.width += width * 0.5
         }
-        if case let .solid(width, _) = borders.right {
+        if case let .solid(width, _, _) = borders.right {
             frame.size.width += width * 0.5
         }
-        if case let .solid(width, _) = borders.top {
+        if case let .solid(width, _, _) = borders.top {
             frame.origin.y -= width * 0.5
             frame.size.height += width * 0.5
         }
-        if case let .solid(width, _) = borders.bottom {
+        if case let .solid(width, _, _) = borders.bottom {
             frame.size.height += width * 0.5
         }
     }
