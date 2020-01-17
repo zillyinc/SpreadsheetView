@@ -19,7 +19,7 @@ public struct Gridlines {
     }
 }
 
-@available(*, deprecated, message: "please use: Gridlines")
+@available(*, deprecated, renamed: "Gridlines")
 public typealias Grids = Gridlines
 
 public enum GridStyle {

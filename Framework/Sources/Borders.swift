@@ -21,7 +21,7 @@ public struct Borders {
 
 public enum BorderStyle {
     case none
-    case solid(width: CGFloat, color: UIColor, dashPattern: [CGFloat])
+    case solid(width: CGFloat, color: UIColor, dashPattern: [CGFloat] = [])
 }
 
 extension BorderStyle: Equatable {
